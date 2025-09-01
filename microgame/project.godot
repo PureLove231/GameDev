@@ -11,5 +11,6 @@ config_version=5
 [application]
 
 config/name="MicroGame"
+run/main_scene="uid://ddwh4w27u5avc"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
