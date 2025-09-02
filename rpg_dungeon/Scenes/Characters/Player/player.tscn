@@ -1,6 +1,7 @@
-[gd_scene load_steps=33 format=3 uid="uid://xi2eut118gqt"]
+[gd_scene load_steps=34 format=3 uid="uid://xi2eut118gqt"]
 
 [ext_resource type="Texture2D" uid="uid://cxlopnusoey1j" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_000.png" id="1_61squ"]
+[ext_resource type="Script" uid="uid://d2x8yfrktlpux" path="res://Scripts/Player/Player.cs" id="1_nafmd"]
 [ext_resource type="Texture2D" uid="uid://com8ejojfxwmq" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_001.png" id="2_nafmd"]
 [ext_resource type="Texture2D" uid="uid://b18cnt8mb5y5o" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_002.png" id="3_46w32"]
 [ext_resource type="Texture2D" uid="uid://dw4ikn8i5ttwq" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_003.png" id="4_eiaiy"]
@@ -86,12 +87,16 @@ _data = {
 &"RESET": SubResource("Animation_fu5o4")
 }
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("animPlayerNode", "sprite")]
+script = ExtResource("1_nafmd")
+animPlayerNode = NodePath("AnimationPlayer")
+sprite = NodePath("Sprite3D")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 texture = ExtResource("1_61squ")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite3D")
 libraries = {
 &"": SubResource("AnimationLibrary_ybcsq")
 }

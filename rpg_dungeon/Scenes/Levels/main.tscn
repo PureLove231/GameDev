@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://3last6gl7qoo"]
+
+[ext_resource type="Script" uid="uid://dtk8qhxw6li3" path="res://Scripts/Levels/Main.cs" id="1_s0gyx"]
+[ext_resource type="PackedScene" uid="uid://xi2eut118gqt" path="res://Scenes/Characters/Player/player.tscn" id="2_yjsus"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_s0gyx")
+
+[node name="Player" parent="." instance=ExtResource("2_yjsus")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.06478)
+fov = 94.2
