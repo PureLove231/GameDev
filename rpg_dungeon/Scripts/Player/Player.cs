@@ -25,12 +25,23 @@ public partial class Player : CharacterBody3D
 
         MoveAndSlide();
 
+        FlipSprite();
+
     }
 
     public override void _Input(InputEvent @event)
     {
 
-        direction = Input.GetVector("MoveLeft", "MoveRight", "MoveForward", "MoveBackward");
+        direction = Input.GetVector
+        (
+
+            GameConstants.PlayerMove_LEFT,
+            GameConstants.PlayerMove_RIGHT,
+            GameConstants.PlayerMove_UP,
+            GameConstants.PlayerMove_Down
+
+
+        );
 
         if (direction == Vector2.Zero)
         {
@@ -40,19 +51,20 @@ public partial class Player : CharacterBody3D
 
         else
         {
-            animPlayerNode.Play("Move");
+            animPlayerNode.Play(GameConstants.Anim_MOVE);
         }
 
-        if (direction.X == -1)
-        {
-            sprite.FlipH = true;
 
-        }
 
-        else
-        {
-            sprite.FlipH = false;
-        }
+    }
 
+    private void FlipSprite()
+    {
+        bool isNotMovingHorizontally = Velocity.X == 0;
+        if (isNotMovingHorizontally) { return; }
+
+
+        bool isMovingleft = Velocity.X < 0;
+        sprite.FlipH = isMovingleft;
     }
 }
