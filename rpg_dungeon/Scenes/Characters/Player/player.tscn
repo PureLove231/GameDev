@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://xi2eut118gqt"]
+[gd_scene load_steps=37 format=3 uid="uid://xi2eut118gqt"]
 
 [ext_resource type="Texture2D" uid="uid://cxlopnusoey1j" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_000.png" id="1_61squ"]
 [ext_resource type="Script" uid="uid://d2x8yfrktlpux" path="res://Scripts/Player/Player.cs" id="1_nafmd"]
@@ -29,6 +29,9 @@
 [ext_resource type="Texture2D" uid="uid://bakbvofefdnrx" path="res://Assets/Sprites/Characters/Player/Running/Running_009.png" id="26_ht3jl"]
 [ext_resource type="Texture2D" uid="uid://bon17ai2r87p7" path="res://Assets/Sprites/Characters/Player/Running/Running_010.png" id="27_856el"]
 [ext_resource type="Texture2D" uid="uid://c4v3utmql572g" path="res://Assets/Sprites/Characters/Player/Running/Running_011.png" id="28_oql2n"]
+[ext_resource type="Script" uid="uid://b8s1ek7bho3vo" path="res://Scripts/Player/IdleState.cs" id="30_46w32"]
+[ext_resource type="Script" uid="uid://vrkw1kngoqb6" path="res://Scripts/Player/MoveState.cs" id="31_cflke"]
+[ext_resource type="Script" uid="uid://daa5l3cs7kw7d" path="res://Scripts/Player/StateMachine.cs" id="32_4yec0"]
 
 [sub_resource type="Animation" id="Animation_j3cns"]
 resource_name = "Idle"
@@ -45,21 +48,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [ExtResource("1_61squ"), ExtResource("2_nafmd"), ExtResource("3_46w32"), ExtResource("4_eiaiy"), ExtResource("5_cflke"), ExtResource("6_4yec0"), ExtResource("7_me3gr"), ExtResource("8_2iqoh"), ExtResource("9_gii1i"), ExtResource("10_1ujki"), ExtResource("11_gs6v2"), ExtResource("12_ywskp"), ExtResource("13_gelu2"), ExtResource("14_uvgfe"), ExtResource("15_e5xbx"), ExtResource("16_8uivy"), ExtResource("17_yfcdn"), ExtResource("1_61squ"), ExtResource("1_61squ")]
-}
-
-[sub_resource type="Animation" id="Animation_fu5o4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("1_61squ")]
 }
 
 [sub_resource type="Animation" id="Animation_sofil"]
@@ -80,6 +68,21 @@ tracks/0/keys = {
 "values": [ExtResource("1_61squ"), ExtResource("18_68bc3"), ExtResource("19_mf3wh"), ExtResource("20_2qsty"), ExtResource("21_h8opa"), ExtResource("22_c3p1j"), ExtResource("23_gnhsk"), ExtResource("24_v1h8f"), ExtResource("25_f47x5"), ExtResource("26_ht3jl"), ExtResource("27_856el"), ExtResource("28_oql2n")]
 }
 
+[sub_resource type="Animation" id="Animation_fu5o4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_61squ")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ybcsq"]
 _data = {
 &"Idle": SubResource("Animation_j3cns"),
@@ -87,10 +90,11 @@ _data = {
 &"RESET": SubResource("Animation_fu5o4")
 }
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("animPlayerNode", "sprite")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("animPlayerNode", "sprite", "stateMachineNode")]
 script = ExtResource("1_nafmd")
 animPlayerNode = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite3D")
+stateMachineNode = NodePath("StateMachine")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 texture_filter = 0
@@ -101,3 +105,14 @@ root_node = NodePath("../Sprite3D")
 libraries = {
 &"": SubResource("AnimationLibrary_ybcsq")
 }
+
+[node name="IdleState" type="Node" parent="."]
+script = ExtResource("30_46w32")
+
+[node name="MoveState" type="Node" parent="."]
+script = ExtResource("31_cflke")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("currentState", "states")]
+script = ExtResource("32_4yec0")
+currentState = NodePath("../IdleState")
+states = [NodePath("../IdleState"), NodePath("../MoveState")]
