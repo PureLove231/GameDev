@@ -9,7 +9,9 @@ public partial class Player : CharacterBody3D
     [Export] public AnimationPlayer animPlayerNode;
     [Export] public Sprite3D sprite;
     [Export] float speed = 30f;
-    private Vector2 direction = new();
+    public Vector2 direction = new();
+
+    [Export] public StateMachine stateMachineNode;
 
 
 
