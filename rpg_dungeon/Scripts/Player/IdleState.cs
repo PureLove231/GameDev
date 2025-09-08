@@ -10,10 +10,13 @@ public partial class IdleState : Node
     {
 
         characterNode = GetOwner<Player>();
+
+        SetPhysicsProcess(false);
     }
 
     public override void _PhysicsProcess(double delta)
     {
+
         if (characterNode.direction != Vector2.Zero)
         {
             characterNode.stateMachineNode.SwitchState<MoveState>();
@@ -29,8 +32,14 @@ public partial class IdleState : Node
         {
 
             characterNode.animPlayerNode.Play(GameConstants.Anim_IDLE);
+            SetPhysicsProcess(true);
 
 
+        }
+
+        else if (what == 5002)
+        {
+            SetPhysicsProcess(false);
         }
     }
 

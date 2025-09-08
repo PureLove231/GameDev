@@ -1,29 +1,19 @@
 using Godot;
 using System;
 
-public partial class MoveState : Node
+public partial class DashState : Node
 {
-
     private Player characterNode;
+
+
     public override void _Ready()
     {
-
         characterNode = GetOwner<Player>();
         SetPhysicsProcess(false);
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
 
 
-        if (characterNode.direction == Vector2.Zero)
-        {
-
-            characterNode.stateMachineNode.SwitchState<IdleState>();
-        }
-
-
-    }
 
     public override void _Notification(int what)
     {
@@ -32,7 +22,7 @@ public partial class MoveState : Node
         if (what == 5001)
         {
 
-            characterNode.animPlayerNode.Play(GameConstants.Anim_MOVE);
+            characterNode.animPlayerNode.Play(GameConstants.Anim_DASH);
             SetPhysicsProcess(true);
 
         }
@@ -42,4 +32,9 @@ public partial class MoveState : Node
             SetPhysicsProcess(false);
         }
     }
+
+
+
+
+
 }
