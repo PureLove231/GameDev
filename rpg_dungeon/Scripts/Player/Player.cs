@@ -15,19 +15,6 @@ public partial class Player : CharacterBody3D
 
 
 
-    public override void _PhysicsProcess(double delta)
-    {
-
-
-        Velocity = new(direction.X, 0, direction.Y);
-        Velocity *= speed;
-
-        MoveAndSlide();
-
-        FlipSprite();
-
-    }
-
     public override void _Input(InputEvent @event)
     {
 
@@ -47,7 +34,7 @@ public partial class Player : CharacterBody3D
 
     }
 
-    private void FlipSprite()
+    public void FlipSprite()
     {
         bool isNotMovingHorizontally = Velocity.X == 0;
         if (isNotMovingHorizontally) { return; }
